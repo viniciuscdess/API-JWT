@@ -13,7 +13,8 @@ class ClientController extends Controller
      */
     public function index()
     {
-        $clients = Client::pagination(5);
+        $clients = Client::all();
+        // $clients = Client::pagination(5);
 
         return response()->json([
             'success' => true,
@@ -27,7 +28,19 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $client = new Client();
+
+        $client->name = $request->name;
+        $client->email = $request->email;
+        $client->phone = $request->phone;
+
+        $client->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Success',
+            'data'    => $client,
+        ], 200);
     }
 
     /**
@@ -35,7 +48,13 @@ class ClientController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $client = Client::find($id);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Success',
+            'data'    => $client,
+        ], 200);
     }
 
     /**
@@ -43,7 +62,19 @@ class ClientController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $client = Client::find($id);
+
+        $client->name = $request->name;
+        $client->email = $request->email;
+        $client->phone = $request->phone;
+
+        $client->save();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Success',
+            'data'    => $client,
+        ], 200);
     }
 
     /**
@@ -51,6 +82,13 @@ class ClientController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $client = Client::find($id);
+
+        $client->delete();
+
+        return response()->json([
+            'status' => 'ok',
+            'message'=> 'success',
+        ], 200);
     }
 }
